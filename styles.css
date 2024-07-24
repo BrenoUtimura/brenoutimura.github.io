@@ -1,0 +1,15 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    background-color: blueviolet;
+}
+
+.navbar {
+    background-color: aqua;
+    display: flex;
+    padding: 16px;
+    font-family: sans-serif;
+    color: rgb(24, 19, 19);
+}
