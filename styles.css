@@ -3,11 +3,16 @@ h1 {
 }
 
 body {
-    background-color: blueviolet;
+    background-color: #6d6d6d;
+}
+
+img {
+    align-items: center;
+    display: flex;
 }
 
 .navbar {
-    background-color: aqua;
+    background-color: #1f1f1f;
     display: flex;
     padding: 16px;
     font-family: sans-serif;
