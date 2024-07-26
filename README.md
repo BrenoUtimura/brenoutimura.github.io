@@ -1,6 +1,5 @@
 # Primeiros prazos do projeto no momento
 
-
 - [x] criar repositório;
 - [x] deixar ele no ar (github pages);
 - [ ] Terminar o Header;
