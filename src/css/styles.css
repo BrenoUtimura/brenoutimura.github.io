@@ -1,0 +1,50 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    background-color: #6d6d6d;
+    margin: 0px;
+    align-items: center;
+    text-align: center;
+}
+
+main {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 50px;
+    align-items: center;
+}
+
+
+.navbar ul {
+    list-style-type: none;
+    background-color: hsl(0, 0%, 25%);
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+.navbar a:hover {
+    background-color: hsl(0, 0%, 10%);
+    transition: 0.6s;
+    border-radius: 30px;
+}
+
+.navbar li {
+    float: right;
+}
+
+/*
+.navbar ul img{
+    float: left;
+}
+*/
