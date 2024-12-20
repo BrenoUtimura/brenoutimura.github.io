@@ -50,20 +50,7 @@ main {
 
 
 .circular-img {
-    display: inline-block;
-    padding: 3px;
-    border-radius: 50%;
-    height: 260px;
-    width: 500px;
-    background: transparent;
-    transition: all 0.3s ease;
-    position: relative;
-    box-shadow: 0 0 5px #1d01f5;
-    margin-right: 600px;
-}
-
-.circular-img:hover {
-    box-shadow: 0 0 10px #1d01f5, 0 0 10px #1d01f5, 0 0 20px #fff inset;
+    width: 45%;
 }
 
 
@@ -89,7 +76,13 @@ main {
 }
 
 .hidden {
-    display: flex;
-    margin-left: 1130px;
     cursor: pointer;
+    margin-left: 108%;
+    margin-right: 3.7%;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+}
+
+.content {
+    padding: 100px;
 }
