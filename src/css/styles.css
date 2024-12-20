@@ -4,10 +4,11 @@
 
 h1 {
     text-align: center;
+    color: #fff;
 }
 
 body {
-    background-color: #6d6d6d;
+    background-color: #0d0d0d;
     margin: 0px;
     align-items: center;
     text-align: center;
@@ -47,8 +48,48 @@ main {
     float: right;
 }
 
-/*
-.navbar ul img{
-    float: left;
+
+.circular-img {
+    display: inline-block;
+    padding: 3px;
+    border-radius: 50%;
+    height: 260px;
+    width: 500px;
+    background: transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 0 5px #1d01f5;
+    margin-right: 600px;
 }
-*/
+
+.circular-img:hover {
+    box-shadow: 0 0 10px #1d01f5, 0 0 10px #1d01f5, 0 0 20px #fff inset;
+}
+
+
+.carrer {
+    background-color: #0650a5;
+}
+
+.div-carrer {
+    color: #fff;
+}
+
+.contact {
+    background-color: rgb(41, 214, 214);
+    margin-top: -19px;
+}
+
+.div-contact {
+    color: #0d0d0d;
+}
+
+.aboutme {
+    color: #fff;
+}
+
+.hidden {
+    display: flex;
+    margin-left: 1130px;
+    cursor: pointer;
+}
