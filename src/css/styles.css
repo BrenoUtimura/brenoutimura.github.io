@@ -1,3 +1,5 @@
+/* Configuração Geral da página */
+
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +11,8 @@ body {
     background-color: #311731;
 }
 
+
+/* Configuração da navbar */
 .navbar {
     position: fixed;
     left: 0;
@@ -48,7 +52,6 @@ body {
 }
 
 .navbar ul li:hover a {
-    color: blue;
     transform: translateY(-5px);
     transition: all 0.5s;
 }
@@ -61,7 +64,7 @@ body {
 }
 
 
-/* CONFIGURANDO O CONTEÚDO SOBRE MIM */
+/* Configuração do conteúdo sobre mim */
 .about {
     display: flex;
     align-items: center;
@@ -121,7 +124,7 @@ body {
     mix-blend-mode: lighten;
 }
 
-/* CONFIGURANDO O CONTEÚDO SOBRE EXPERIÊNCIA */
+/* Configurando a hiddenPage */
 .hiddenPage {
     position: relative;
     display: flex;
@@ -133,7 +136,3 @@ body {
     display: block;
     right: -12px;
 }
-
-
-
-/* Configurando a resposividade da página */
