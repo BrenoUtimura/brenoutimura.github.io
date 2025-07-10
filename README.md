@@ -9,4 +9,4 @@
 - [ ] Montar a página principal de games;
 - [ ] Criar a página rodando de cada jogo;
 - [x] Corrigir a cor dos menus de seleção na página do portifólio;
-- [ ] Corrigir o neon dos cards para que acompanhe a movimentação da animação do card;
+- [x] Corrigir o neon dos cards para que acompanhe a movimentação da animação do card;
