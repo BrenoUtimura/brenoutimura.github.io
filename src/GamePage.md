@@ -13,3 +13,9 @@ Flappy Bird: https://youtu.be/i9164jc-j_M?si=9kLy4vY11oyrrcA7
 Pacman: https://youtu.be/GXlckaGr0Eo?si=HvWGRXJybHglzapd
 
 Jump Mario: https://youtu.be/r9buAwVBDhA?si=XcQu5-xQyOFlDK-q
+
+Snake: https://youtu.be/LyWSsZktVOg?si=eFy1TApV7T8DCf4d
+
+Ludo: https://youtu.be/kGKt3sbJMOs?si=B1swOqowLJcpq66N
+
+Making Games playlist: https://youtube.com/playlist?list=PLpwngcHZlPadAbdD_sFE_moH6RjgaTFCw&si=cAwlBHhkN31MFILK
