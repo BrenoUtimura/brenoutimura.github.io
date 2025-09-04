@@ -10,3 +10,4 @@
 - [ ] Criar a página rodando de cada jogo;
 - [x] Corrigir a cor dos menus de seleção na página do portifólio;
 - [x] Corrigir o neon dos cards para que acompanhe a movimentação da animação do card;
+- [ ] Terminar a implementação da responsividade na página, onde terá de corrigir a lista de intens no menu que não está sumindo quando eu reduzo a tela para o minímo;

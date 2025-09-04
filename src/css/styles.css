@@ -68,8 +68,8 @@ body {
 .about {
     display: flex;
     align-items: center;
-    height: 100vh;
-    padding: 60px 9% 0;
+    min-height: 100vh;
+    padding: 100px 9% 40px;
     color: #fff;
 }
 
@@ -135,4 +135,133 @@ body {
     position: absolute;
     display: block;
     right: -12px;
+}
+
+.menu-burguer {
+    display: none;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+}
+
+/* Configurando o media screen da página */
+@media (max-width: 800px){
+
+    .navbar{
+        flex-direction: column;
+        padding: 15px 5%;
+        align-items: flex-start;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .navbar ul li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    /* configuração da logo */
+    .logo img {
+        max-width: 200px;
+    }
+
+    /* Configuração do menu burguer */
+    .menu-burguer {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #251d40;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 99;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    /* configuração de sobre mim */
+    .about {
+        flex-direction: column;
+        align-items: center;
+        padding: 120px 5% 40px;
+        text-align: center;
+    }
+
+    .about-me {
+        font-size: 18px;
+    }
+
+    .about-me .sci a {
+        font-size: 80px;
+        padding: 40px;
+    }
+
+    /* Manipulando a imagem principal da homepage */
+    .home-img .img-box {
+        width: 50vw;
+        height: 50vw;
+    }
+
+    /* Manipulação da mini imagem da hidden page */
+    .hiddenPage a {
+        right: 0;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 400px) {
+
+    .navbar {
+        padding: 10px 3%;
+    }
+
+    .navbar ul li a {
+        font-size: 16px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .about-me {
+        font-size: 16px;
+    }
+
+    .about-me .sci a {
+        font-size: 20px;
+        padding: 20px;
+    }
+
+    .home-img .img-box {
+        width: 40vw;
+        height: 40vw;
+    }
 }
