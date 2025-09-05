@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const menuBurguer = document.querySelector('.menu-burguer');
-  const navLinks = document.querySelector('.nav-links');
+  const menuBurguer = document.querySelector(".menu-burger");
+  const navList = document.querySelector(".nav-list");
 
-
-  menuBurguer.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+  menuBurguer.addEventListener("click", () => {
+    navList.classList.toggle("active");
   });
 });
