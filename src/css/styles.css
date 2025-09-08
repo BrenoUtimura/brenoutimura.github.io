@@ -95,7 +95,6 @@ body {
 }
 
 .about-me .sci a i:hover {
-    color: hsl(240, 97%, 51%);
     transition: 0.5s;
 }
 
@@ -136,9 +135,11 @@ body {
 .hiddenPage a {
     position: absolute;
     display: block;
-    right: -12px;
+    right: -20px;
 }
 
+
+/* Configuração do menu Burguer */
 .menu-burger {
     display: none;
     border: none;
@@ -218,15 +219,15 @@ body {
     }
 
     .nav-list li:nth-child(1) a {
-        transition: 0.5s 0.2s;
+        transition: 0.5s;
     }
 
     .nav-list li:nth-child(2) a {
-        transition: 0.5s 0.4s;
+        transition: 0.5s;
     }
 
     .nav-list li:nth-child(3) a {
-        transition: 0.5s 0.6s;
+        transition: 0.5s;
     }
 
     /* Estilos ativos da navList */
@@ -280,7 +281,8 @@ body {
 
     /* Manipulação da mini imagem da hidden page */
     .hiddenPage a {
-        right: 0;
+        position: absolute;
+        right: -20px;
         font-size: 14px;
     }
 }
