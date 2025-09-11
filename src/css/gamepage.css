@@ -373,3 +373,8 @@ h1, h2 {
     border: 2px solid #0ff;
     transition: 1.5s;
 }
+
+.tracker {
+  pointer-events: none;
+}
+
