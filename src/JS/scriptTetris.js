@@ -242,7 +242,7 @@ class PlayPiece{
 
 
     // Geração da próxima peço
-    nextPiece(){
+    nextPieces(){
         this.nextPieceType = pseudoTandom(this.pieceType);
         this.nextPieces = [];
 
@@ -286,6 +286,221 @@ class PlayPiece{
     resetPiece(){
         this.rotation = 0;
         this.fallen = false;
-        
+        this.pox.x = 330;
+        this.pos.y = -60
+
+        this.pieceType = this.nextPieceType;
+
+        this.nextPieces();
+        this.newPoints();
+    }
+
+    // Generate the points for the piece
+    newPoints(){
+
+        const points = orientPoints(this.pieceType, this.rotation);
+        this.orientation = points;
+        this.pieces = [];
+
+        for (let i = 0; i < points.length; i++){
+            this.pieces.push(new Square(this.pos.x + points[i][0] * gridSpace, this.pos.y + points[i][1] * gridSpace, this.pieceType));
+        }
+    }
+
+
+    // Update the position of the current piece
+    updatePoints(){
+        if(this.pieces){
+            const points = orientPoints(this.pieceType, this.rotation);
+            this.orientation = points;
+
+            for(let i = 0; i < 4; i++){
+                this.pieces[i].pos.x = this.pos.x + points[i][0] * gridSpace;
+                this.pieces[i].pos.y = this.pos.y + points[i][1] * gridSpace;
+            }
+        }
+    }
+
+
+    // Add an offset to the position of current piece
+    addPos(x, y){
+      this.pos.x += x;
+      this.pos.y += y;
+
+      if(this.pieces){
+         for(let i = 0; i < 4; i++){
+            this.pieces[i].pos.x += x;
+            this.pieces[i].pos.y += y;
+         }
+      }
+    }
+
+
+    // Check if there will be a collision in the future
+    futureCollision(x, y, rotation){
+      let xx, yy, points = 0;
+
+      if(rotation !== this.rotation){
+         points = orientPoints(this.pieceType, rotation);
+      }
+
+      for(let i = 0; i < this.pieces.length; i++){
+
+          if(points){
+            xx = this.pos.x + points[i][0] * gridSpace;
+            yy = this.pos.y + points[i][1] * gridSpace;
+          }
+          else {
+            xx = this.points[i].pos.x + x;
+            yy = this.points[i].pos.y + y;
+          }
+
+          if(xx < gameEdgeLeft || xx + gridSpace > gameEdgeRight || yy + gridSpace > height){
+            return true;
+          }
+
+          for(let j = 0; gridPieces.length; j++){
+              if(xx === gridPieces[j].pos.x){
+                  if(yy >= gridPieces[j].pos.y && yy < gridPieces[j].pos.y + gridSpace){
+                    return true;
+                  }
+
+                  if(yy + gridSpace > gridPieces[j].pos.y && yy + gridSpace <= gridPieces[j].pos.y + gridSpace){
+                    return true;
+                  }
+              }
+          }
+      }
+    }
+
+
+    // handle user input
+    input(key){
+       switch(key){
+          case LEFT_ARROW:
+              if(!this.futureCollision(-gridSpace, 0, this.rotation)){
+                 this.addPos(-gridSpace, 0);
+              }
+          break;
+
+          case RIGHT_ARROW:
+              if(!this.futureCollision(gridSpace, 0, this.rotation)){
+                 this.addPos(gridSpace, 0);
+              }
+          break;
+
+          case UP_ARROW:
+              let newRotation = this.rotation + 1;
+
+              if(newRotation > 3){
+                newRotation = 0;
+              }
+
+              if(!this.futureCollision(0, 0, newRotation)){
+                 this.rotation = newRotation;
+                 this.updatePoints();
+              }
+          break;
+       }
+    }
+
+    // Rotate the current piece
+    rotate(){
+      this.rotation += 1;
+
+      if(this.rotation > 3){
+         this.rotation = 0;
+      }
+
+      this.updatePoints();
+    }
+
+    // Show the current piece
+    show(){
+      for(let i = 0; i < this.pieceType.length; i++){
+          this.pieces[i].show();
+      }
+
+      for(let i = 0; i < this.nextPieces.length; i++){
+          this.nextPieces[i].show();
+      }
+    }
+
+
+    // Commit the current shape to the grid
+    commitShape(){
+      for(let i = 0; i < this.pieces.length; i++){
+          gridPieces.push(this.pieces[i]);
+      }
+
+      this.resetPiece();
+      analyzeGrid();
     }
 }
+
+
+// Class for each squere in a place
+class Square {
+    constructor(x, y, type){
+        this.pos = creteVector(x, y);
+        this.type = type;
+    }
+
+    // Show the square
+    show(){
+        strokeWeight(2);
+        const colorDark = '#092e1d';
+        const colorMid = colors[this.type];
+
+        fill(colorMid);
+        stroke(25);
+        rect(this.pos.x, this.pos.y, gridSpace - 1, gridSpace - 1);
+
+        noStroke();
+        fill(255);
+        rect(this.pos.x + 6, this.pos.y + 6, 18, 2);
+        rect(this.pos.x + 6, this.pos.y + 6, 2, 16);
+        fill(25);
+        rect(this.pos.x + 6, this.pos.y + 20, 10, 2);
+        rect(this.pos.x + 6, this.pos.y + 6, 2, 16);
+    }
+} 
+
+// Generate a pseudo-random number for the next piece
+function  pseudoRandom(previous) {
+  let roll = Math.floor(Math.random() * 8);
+
+  if(roll == previous || roll === 7){
+      roll = Math.floor(Math.random() * 7);
+  }
+
+  return roll;
+}
+
+
+// Analyze the grid and clear lines if necessary
+function analyzeGrid(){
+    let score = 0;
+
+    while(checkLines()){
+        score += 100;
+        linesCleared += 1;
+
+        if(linesCleared % 10 === 0){
+           currentLevel += 1;
+
+           if(updateEveryCurrent > 2){
+              updateEveryCurrent -= 1;
+           }
+        }
+    }
+
+    if(score > 100){
+       score += 2;
+    }
+
+    currentScore += score;
+}
+
+
+// Check if there are any complete lines in the grid
