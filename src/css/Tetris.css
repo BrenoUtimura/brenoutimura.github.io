@@ -9,3 +9,7 @@ body {
   justify-content: center;
   height: 100vh;
 }
+
+h1 {
+  color: white;
+}
