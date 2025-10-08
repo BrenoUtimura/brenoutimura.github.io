@@ -12,9 +12,8 @@ let currentLevel = 1;
 let linesCleared = 0;
 
 let ticks = 0;
-let updateEvery = 15;
-let updateEveryCurrent = 15;
-let fallSpeed = gridSpace * 0.5;
+let updateEvery = 10;
+let updateEveryCurrent = 10;
 let pauseGame = false;
 let gameOver = false;
 
@@ -33,73 +32,75 @@ const colors = [
   '#ffd700',
 ];
 
+// Helpers de grid <-> pixels
+function getNumCols() {
+  return (gameEdgeRight - gameEdgeLeft) / gridSpace;
+}
+
+function getNumRows() {
+  return Math.floor(height / gridSpace);
+}
+
+function pixelToCol(px) {
+  return Math.round((px - gameEdgeLeft) / gridSpace);
+}
+
+function pixelToRow(py) {
+  return Math.round(py / gridSpace);
+}
+
+function colToPixel(col) {
+  return gameEdgeLeft + col * gridSpace;
+}
+
+function rowToPixel(row) {
+  return row * gridSpace;
+}
+
 // Função de configuração chamada uma vez no início
 function setup() {
   createCanvas(600, 540);
 
-  // Create a new falling pieces
   fallingPiece = new PlayPiece();
   fallingPiece.resetPiece();
 
-  // Set the font the text
   textFont('Ubuntu');
 }
 
 // Função Draw chamada repetidamente
 function draw() {
-  // Definindo as cores usadas no game
   const colorDark = '#0d0d0d';
   const colorLight = '#304550';
   const colorBackground = 'gray';
 
-  // Setando a cor do background
   background(colorBackground);
 
-  // Draw the right side info panel
   fill(25);
   noStroke();
   rect(gameEdgeRight, 0, 150, height);
 
-  // Draw the left side info panel
   fill(colorBackground);
   rect(450, 80, 150, 70);
-
-  // Draw the next piece rectangle
   rect(460, 405, 130, 5, 5);
-
-  // Draw the level rectangle
   rect(460, 210, 130, 60, 5, 5);
-
-  // Draw the lines rectangle
   rect(460, 280, 130, 60, 5, 5);
 
-  // Draw the score lines
   fill(colorLight);
   rect(450, 85, 150, 20);
   rect(450, 110, 150, 4);
   rect(450, 140, 150, 4);
 
-  // Draw the score banner
   fill(colorBackground);
   rect(460, 60, 130, 35, 5, 5);
 
-  // Draw the score banner inner rectangle
   strokeWeight(3);
   noFill();
   stroke(colorLight);
   rect(465, 65, 120, 25, 5, 5);
-
-  // Draw the next piece inner rectangle
-  stroke(colorLight);
   rect(465, 410, 120, 120, 5, 5);
-
-  // Draw the level inner rectangle
   rect(465, 215, 120, 50, 5, 5);
-
-  // Draw the lines inner rectangle
   rect(465, 285, 120, 50, 5, 5);
 
-  // Draw the info labels
   fill(25);
   noStroke();
   textSize(24);
@@ -108,53 +109,52 @@ function draw() {
   text("Level", 525, 238);
   text("Lines", 525, 308);
 
-  // Draw the actual info
   textSize(24);
   textAlign(RIGHT);
   text(currentScore, 560, 135);
   text(currentLevel, 560, 260);
   text(linesCleared, 560, 330);
 
-  // Draw the game border
   stroke(colorDark);
   line(gameEdgeRight, 0, gameEdgeRight, height);
 
-  // show the falling piece
+  // Mostra as peças caindo
   fallingPiece.show();
 
-  // Speed up the falling piece if the down arrow is pressed
+  // Acelera a queda das peças se caso a seta para baixo do teclado for pressionada
   if (keyIsDown(DOWN_ARROW)) {
     updateEvery = 2;
   } else {
     updateEvery = updateEveryCurrent;
   }
 
-  // Update game state
+  // Atualiza o estado do jogo
   if (!pauseGame) {
     ticks++;
-
     if (ticks >= updateEvery) {
       ticks = 0;
-      fallingPiece.fall(fallSpeed);
+
+      // sempre se move exatamente 1 célula
+      fallingPiece.fall();
     }
   }
 
-  // Show the grid pieces
+  // Mostra as peças do grid
   for (let i = 0; i < gridPieces.length; i++) {
     gridPieces[i].show();
   }
 
-  // Show the fading lines
+  // Mostra as fading lines
   for (let i = 0; i < lineFades.length; i++) {
     lineFades[i].show();
   }
 
-  // Process the grid workers
+  // Processa o grid workers do código
   if (gridWorkers.length > 0) {
     gridWorkers[0].work();
   }
 
-  // Explain the controls
+  // Explicação dos controles do jogo
   textAlign(CENTER);
   fill(255);
   noStroke();
@@ -165,7 +165,8 @@ function draw() {
   text("Down:\nfall faster", 75, 330);
   text("R:\nreset game", 75, 380);
 
-  // show the game over text
+
+  // Mostra o texto de Game Over
   if (gameOver) {
     fill(colorDark);
     textSize(54);
@@ -173,7 +174,7 @@ function draw() {
     text("Game Over!", 300, 270);
   }
 
-  // Draw the game border
+  // Desenha a borda do game
   strokeWeight(3);
   stroke('#304550');
   noFill();
@@ -199,70 +200,110 @@ function keyPressed() {
   }
 }
 
-// Class for the falling piece
+// Classe para a fallin piece
 class PlayPiece {
   constructor() {
-    this.pos = createVector(0, 0);
+    this.pos = createVector(0, 0); // pixel position do canto esquerdo superior do "bloco lógico"
     this.rotation = 0;
-    this.nextPieceType = Math.floor(Math.random() * 7);
-    this.nextPieces = [];
-    this.pieceType = 0;
+    this.pieceType = Math.floor(Math.random() * 7); // gera a primeira peça
+    this.nextPieceType = Math.floor(Math.random() * 7); // gera a próxima
     this.pieces = [];
+    this.nextPieces = [];
     this.orientation = [];
     this.fallen = false;
   }
 
-  // Geração da próxima peça (renomeada para evitar conflito)
+  // Geração da próxima peça (preview)
   generateNextPieces() {
-    this.nextPieceType = pseudoRandom(this.pieceType);
     this.nextPieces = [];
+    const nextPoints = orientPoints(this.nextPieceType, 0);
 
-    const points = orientPoints(this.nextPieceType, 0);
+    const previewBoxCenterX = 525;
+    const previewBoxCenterY = 470;
 
-    let xx = 525, yy = 490;
+    const xs = nextPoints.map(p => p[0]);
+    const ys = nextPoints.map(p => p[1]);
 
-    if (this.nextPieceType !== 0 && this.nextPieceType !== 3 && this.nextPieceType !== 5) {
-      xx += (gridSpace * 0.5);
-    }
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
 
-    if (this.nextPieceType == 5) {
-      xx -= (gridSpace * 0.5);
-    }
+    const pieceWidth = (maxX - minX + 1) * gridSpace;
+    const pieceHeight = (maxY - minY + 1) * gridSpace;
+
+    const offsetX = previewBoxCenterX - pieceWidth / 2 - minX * gridSpace;
+    const offsetY = previewBoxCenterY - pieceHeight / 2 - minY * gridSpace;
 
     for (let i = 0; i < 4; i++) {
-      this.nextPieces.push(new Square(xx + points[i][0] * gridSpace, yy + points[i][1] * gridSpace, this.nextPieceType));
+      this.nextPieces.push(
+        new Square(
+          offsetX + nextPoints[i][0] * gridSpace,
+          offsetY + nextPoints[i][1] * gridSpace,
+          this.nextPieceType
+        )
+      );
     }
   }
 
-  // Fazendo a peça cair
-  fall(amount) {
-    if (!this.futureCollision(0, amount, this.rotation)) {
-      this.addPos(0, amount);
-      this.fallen = true;
-    } else {
-      if (!this.fallen) {
-        pauseGame = true;
-        gameOver = true;
-      } else {
-        this.commitShape();
-      }
+  // Fazendo a peça cair (sempre 1 célula por vez)
+  fall() {
+
+    // se não há colisão, desce 1 célula
+    if (!this.futureCollision(0, gridSpace, this.rotation)) {
+        this.addPos(0, gridSpace);
+        this.fallen = true;
+    } 
+    else {
+        // caso haja colisão
+        if (!this.fallen) {
+            // Checa se a colisão ocorreu no topo do campo (mesmo com row < 0)
+            // significa que não havia espaço para spawnar a peça
+            this.commitShape(true); // força commit antes de encerrar
+            pauseGame = true;
+            gameOver = true;
+        } 
+        else {
+            // senão, apenas fixa a peça
+            this.commitShape();
+        }
     }
   }
 
-  // Reset the current piece
+  // Reseta a peça atual (agora spawn alinhado por coluna)
   resetPiece() {
-    this.rotation = 0;
-    this.fallen = false;
-    this.pos.x = 330;
-    this.pos.y = -60;
-
+    // A peça atual vira a próxima
     this.pieceType = this.nextPieceType;
 
-    this.generateNextPieces();
+    // Gera uma nova "próxima" peça para o preview (diferente da atual)
+    this.nextPieceType = pseudoRandom(this.pieceType);
+
+    const points = orientPoints(this.pieceType, 0);
+    const xs = points.map(p => p[0]);
+    const ys = points.map(p => p[1]);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    const pieceWidth = maxX - minX + 1;
+
+    const numCols = getNumCols();
+
+    // Calcula a coluna de início (inteira) para que a peça fique centralizada e alinhada à grade
+    const leftCol = Math.floor((numCols - pieceWidth) / 2) - minX;
+
+    this.pos.x = colToPixel(leftCol);
+
+    // posiciona a peça duas linhas acima do topo (múltiplo do gridSpace)
+    this.pos.y = -2 * gridSpace;
+
     this.newPoints();
+    this.generateNextPieces();
+    this.fallen = false;
   }
 
-  // Generate the points for the piece
+  // Gera os pontos para a peça (cria os Square em pixels)
   newPoints() {
     const points = orientPoints(this.pieceType, this.rotation);
     this.orientation = points;
@@ -273,70 +314,68 @@ class PlayPiece {
     }
   }
 
-  // Update the position of the current piece
+  // Atualiaza a posição da peça atual (snap por cálculo, mantém alinhamento)
   updatePoints() {
-    if (this.pieces) {
-      const points = orientPoints(this.pieceType, this.rotation);
-      this.orientation = points;
+    const points = orientPoints(this.pieceType, this.rotation);
+    this.orientation = points;
 
-      for (let i = 0; i < 4; i++) {
-        this.pieces[i].pos.x = this.pos.x + points[i][0] * gridSpace;
-        this.pieces[i].pos.y = this.pos.y + points[i][1] * gridSpace;
-      }
+    for (let i = 0; i < 4; i++) {
+      this.pieces[i].pos.x = this.pos.x + points[i][0] * gridSpace;
+      this.pieces[i].pos.y = this.pos.y + points[i][1] * gridSpace;
     }
   }
 
-  // Add an offset to the position of current piece
+  // Adiciona um deslocamento à posição da peça atual
   addPos(x, y) {
     this.pos.x += x;
     this.pos.y += y;
 
-    if (this.pieces) {
-      for (let i = 0; i < 4; i++) {
-        this.pieces[i].pos.x += x;
-        this.pieces[i].pos.y += y;
-      }
+    for (let i = 0; i < 4; i++) {
+      this.pieces[i].pos.x += x;
+      this.pieces[i].pos.y += y;
     }
   }
 
-  // Check if there will be a collision in the future
-  futureCollision(x, y, rotation) {
-    let xx, yy, points = 0;
+  // DETECÇÃO DE COLISÃO: usa col/row (grade) em vez de comparar floats/pixels diretamente
+  futureCollision(xOffset, yOffset, rotation) {
+    let testPoints = this.orientation;
 
     if (rotation !== this.rotation) {
-      points = orientPoints(this.pieceType, rotation);
+      testPoints = orientPoints(this.pieceType, rotation);
     }
 
-    for (let i = 0; i < this.pieces.length; i++) {
+    const numCols = getNumCols();
+    const numRows = getNumRows();
 
-      if (points) {
-        xx = this.pos.x + points[i][0] * gridSpace;
-        yy = this.pos.y + points[i][1] * gridSpace;
-      } else {
-        xx = this.pieces[i].pos.x + x;
-        yy = this.pieces[i].pos.y + y;
-      }
+    for (let i = 0; i < testPoints.length; i++) {
+      const testPx = this.pos.x + testPoints[i][0] * gridSpace + xOffset;
+      const testPy = this.pos.y + testPoints[i][1] * gridSpace + yOffset;
 
-      if (xx < gameEdgeLeft || xx + gridSpace > gameEdgeRight || yy + gridSpace > height) {
+      const col = pixelToCol(testPx);
+      const row = pixelToRow(testPy);
+
+      // colisão com as bordas (colunas) ou chão (linhas)
+      if (col < 0 || col >= numCols || row >= numRows) {
         return true;
       }
 
-      for (let j = 0; j < gridPieces.length; j++) {
-        if (xx === gridPieces[j].pos.x) {
-          if (yy >= gridPieces[j].pos.y && yy < gridPieces[j].pos.y + gridSpace) {
-            return true;
-          }
-
-          if (yy + gridSpace > gridPieces[j].pos.y && yy + gridSpace <= gridPieces[j].pos.y + gridSpace) {
+      // se row < 0 => parte acima da tela, não é colisão com blocos fixos
+      if (row >= 0) {
+        for (let j = 0; j < gridPieces.length; j++) {
+          const other = gridPieces[j];
+          const oCol = pixelToCol(other.pos.x);
+          const oRow = pixelToRow(other.pos.y);
+          if (col === oCol && row === oRow) {
             return true;
           }
         }
       }
     }
-    return false; // adiciona retorno para casos sem colisão
+
+    return false;
   }
 
-  // handle user input
+  // Lidando com as entradas do usuário
   input(key) {
     switch (key) {
       case LEFT_ARROW:
@@ -353,11 +392,9 @@ class PlayPiece {
 
       case UP_ARROW:
         let newRotation = this.rotation + 1;
-
         if (newRotation > 3) {
           newRotation = 0;
         }
-
         if (!this.futureCollision(0, 0, newRotation)) {
           this.rotation = newRotation;
           this.updatePoints();
@@ -366,18 +403,7 @@ class PlayPiece {
     }
   }
 
-  // Rotate the current piece
-  rotate() {
-    this.rotation += 1;
-
-    if (this.rotation > 3) {
-      this.rotation = 0;
-    }
-
-    this.updatePoints();
-  }
-
-  // Show the current piece
+  // Mostra a peça atual
   show() {
     for (let i = 0; i < this.pieces.length; i++) {
       this.pieces[i].show();
@@ -388,16 +414,25 @@ class PlayPiece {
     }
   }
 
-  // Commit the current shape to the grid
-  commitShape() {
-    for (let i = 0; i < this.pieces.length; i++) {
-      gridPieces.push(this.pieces[i]);
-    }
+  // Commit a forma atual do grid (snap e criar novos Squares fixos)
+  commitShape(force = false) {
+      for (let i = 0; i < this.pieces.length; i++) {
+          const sp = this.pieces[i];
+          const col = pixelToCol(sp.pos.x);
+          const row = pixelToRow(sp.pos.y);
 
-    this.resetPiece();
+          // cria um novo Square já alinhado (evita referências compartilhadas)
+          const snapped = new Square(colToPixel(col), rowToPixel(row), sp.colorIndex);
+          gridPieces.push(snapped);
+      }
 
-    gridWorkers.push(new GridWorker());
+      // Só gera nova peça se o jogo ainda não acabou
+      if (!gameOver && !force) {
+          this.resetPiece();
+          gridWorkers.push(new GridWorker());
+      }
   }
+
 }
 
 // Classe para os quadrados individuais
@@ -418,19 +453,14 @@ class Square {
 // Função que gera peça aleatória diferente da anterior
 function pseudoRandom(previous) {
   let newType = Math.floor(Math.random() * 7);
-
   while (newType === previous) {
     newType = Math.floor(Math.random() * 7);
   }
-
   return newType;
 }
 
 // Função para definir os pontos das peças conforme o tipo e rotação
 function orientPoints(type, rotation) {
-  // Aqui você deve retornar os pontos corretos conforme seu jogo. Um exemplo simplificado:
-
-  // Cada tipo tem 4 pontos (x, y)
   const pieces = [
     [[0, 0], [1, 0], [0, 1], [1, 1]],  // quadrado
     [[0, 0], [1, 0], [2, 0], [3, 0]],  // linha horizontal
@@ -441,9 +471,8 @@ function orientPoints(type, rotation) {
     [[1, 0], [0, 1], [1, 1], [2, 1]],  // T
   ];
 
-  // Rotacionar os pontos conforme a rotação (0 a 3)
-  let pts = pieces[type];
-
+  let pts = pieces[type].map(p => [p[0], p[1]]);
+  
   for (let r = 0; r < rotation; r++) {
     pts = pts.map(([x, y]) => [y, -x]);
   }
@@ -459,11 +488,8 @@ class GridWorker {
   }
 
   work() {
-    // Lógica para verificar linhas completas e iniciar fade out
-    // (você deve implementar aqui)
-
-    // Por enquanto, removendo esta worker para não travar o jogo
-    gridWorkers.shift();
+    // implementa a detecção de linhas cheias aqui
+    gridWorkers.shift(); // placeholder
   }
 }
 
@@ -476,9 +502,8 @@ function resetGame() {
   currentLevel = 1;
   linesCleared = 0;
   ticks = 0;
-  updateEvery = 15;
-  updateEveryCurrent = 15;
-  fallSpeed = gridSpace * 0.5;
+  updateEvery = 10;
+  updateEveryCurrent = 10;
   pauseGame = false;
   gameOver = false;
 
