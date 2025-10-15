@@ -11,6 +11,11 @@ body {
     background-color: #311731;
 }
 
+h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
 
 /* Configuração da navbar */
 .navbar {
@@ -160,9 +165,12 @@ body {
     transition: 0.3s;
 }
 
-
-.experi h2 {
-    margin-bottom: 5rem;
+/* Configurando a seção de Minhas Experiências */
+.experience {
+    border-radius: 3rem;
+    background-color: #6c4a7d;
+    color: #ffffff;
+    padding-bottom: 10rem;
 }
 
 .experi-container {
@@ -175,30 +183,94 @@ body {
 
 .experi-container .experi-box {
     flex: 1 1 30rem;
-    background: var(--second-bg-color);
-    padding: 3rem 2rem 4rem;
-    border-radius: 2rem;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.05); /* leve transparência */
+    padding: 2rem;
+    border-radius: 1.5rem;
     text-align: center;
-    border: .2rem solid var(--bg-color);
+    box-shadow: 5px 20px 30px rgba(12, 12, 12, 0.767); /* sombra que dá profundidade */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(6px); /* efeito vítreo sutil, se quiser mais moderno */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* borda sutil */
 }
 
-.experi-box img {
-    font-size: 7rem;
-    color: var(--main-color);
+.experi-container .experi-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
+.experi-box .imgDamata{
+    width: 200px; /* Ajuste esse valor conforme necessário */
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 1rem; /* Se quiser deixar arredondado */
+    object-fit: contain; /* Garante que a imagem não fique esticada */
+}
+
+.experi-box .imgFX{
+    width: 160px; /* Ajuste esse valor conforme necessário */
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 1rem; /* Se quiser deixar arredondado */
+    object-fit: contain; /* Garante que a imagem não fique esticada */
+}
+
+.experi-box h3 {
+    font-size: 2rem;
+    margin-bottom: 4rem;
+}
+
+.experi-box p {
+    font-size: 1.5rem;
+    margin: 1rem 0 3rem;
+    margin-top: -2rem;
+}
+
+
+/* Configurando a seção de Parceiros */ 
 .parteners {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 4rem;
+    background-color: #2B2B42;
+    color: #ffffff;
+}
+
+.parteneres-img-item a img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 1rem; 
+    object-fit: contain; 
+}
+
+/* Configurando a seção de Projetos */
+.projects {
+    background-color: #1e2a38;
+    color: #ffffff;
+}
+
+
+/* Configurando a seção de Habilidades */
+.skills {
+    background-color: #4A2F4D;
+    color: #ffffff;
+}
+
+
+/* Configurando a seção de Contato */
+.contacts {
+    background-color: #251d40;
+    color: #ffffff;
 }
 
 
 /* Configurando o media screen da página */
 @media (max-width: 700px){
 
+    /* Configuração da navbar */
     .navbar{
         flex-direction: column;
         padding: 15px 5%;
@@ -230,7 +302,7 @@ body {
         right: 20px;
     }
 
-    /* Configurando a lista da navbar */
+    /* Configurando a Lista da Navbar */
     .nav-list {
         position: absolute;
         top: 0;
@@ -324,6 +396,7 @@ body {
 
 @media (min-width: 400px) {
 
+    /* Configuração da navbar */
     .navbar {
         padding: 20px 5%;
     }
