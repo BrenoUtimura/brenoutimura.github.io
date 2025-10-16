@@ -12,7 +12,7 @@ body {
 }
 
 h2 {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-bottom: 4rem;
     text-align: center;
 }
@@ -167,9 +167,14 @@ h2 {
 
 /* Configurando a seção de Minhas Experiências */
 .experience {
-    background-color: #6c4a7d;
+    background-color: #311731;
     color: #ffffff;
-    padding-bottom: 10rem;
+    padding-bottom: 20rem;
+}
+
+.experi h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .experi-container {
@@ -204,6 +209,7 @@ h2 {
     margin-bottom: 1rem;
     border-radius: 1rem; /* Se quiser deixar arredondado */
     object-fit: contain; /* Garante que a imagem não fique esticada */
+    padding-bottom: 3rem;
 }
 
 .experi-box .imgFX{
@@ -299,7 +305,7 @@ h2 {
 .projects {
     background-color: #1e2a38;
     color: #ffffff;
-    padding-bottom: 5rem;
+    padding-top: 5rem;
 }
 
 .proje h2 {
@@ -328,6 +334,8 @@ h2 {
     gap: 1rem;
     padding: 0 1rem 2rem;
     justify-items: center;
+    padding-bottom: 10rem;
+    padding-top: 10rem;
 }
 
 
@@ -336,9 +344,9 @@ h2 {
     padding: 5rem 3rem;
     border-radius: 1rem;
     text-align: center;
-    width: 100%;
-    max-width: 180px;
-    height: 220px; /* <-- Altura fixa */
+    width: 140%;
+    max-width: 220px;
+    height: 280px; /* <-- Altura fixa */
     box-shadow: 0 4px 10px rgba(18, 187, 238, 0.192);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -368,6 +376,38 @@ h2 {
 .skills {
     background-color: #4A2F4D;
     color: #ffffff;
+    padding-top: 5rem;
+}
+
+.hability-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem 2rem;
+    justify-items: center;
+    padding-bottom: 10rem;
+    padding-top: 10rem;
+}
+
+.hability-box {
+    background-color: rgba(26, 94, 243, 0.08);
+    padding: 5rem 3rem;
+    border-radius: 1rem;
+    text-align: center;
+    width: 140%;
+    max-width: 180px;
+    height: 220px; /* <-- Altura fixa */
+    box-shadow: 0 4px 10px rgba(18, 187, 238, 0.192);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;                 /* Alinhamento interno */
+    flex-direction: column;
+    justify-content: center;      /* Centraliza o conteúdo verticalmente */
+}
+
+.hability-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(22, 193, 236, 0.671);
 }
 
 
