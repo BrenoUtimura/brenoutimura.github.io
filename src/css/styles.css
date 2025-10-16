@@ -13,7 +13,7 @@ body {
 
 h2 {
     font-size: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     text-align: center;
 }
 
@@ -140,7 +140,7 @@ h2 {
 .hiddenPage a {
     position: absolute;
     display: block;
-    right: -20px;
+    right: -15px;
 }
 
 
@@ -167,7 +167,6 @@ h2 {
 
 /* Configurando a seção de Minhas Experiências */
 .experience {
-    border-radius: 3rem;
     background-color: #6c4a7d;
     color: #ffffff;
     padding-bottom: 10rem;
@@ -186,7 +185,7 @@ h2 {
     max-width: 500px;
     background-color: rgba(255, 255, 255, 0.05); /* leve transparência */
     padding: 2rem;
-    border-radius: 1.5rem;
+    border-radius: 2rem;
     text-align: center;
     box-shadow: 5px 20px 30px rgba(12, 12, 12, 0.767); /* sombra que dá profundidade */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -200,7 +199,7 @@ h2 {
 }
 
 .experi-box .imgDamata{
-    width: 200px; /* Ajuste esse valor conforme necessário */
+    width: 100px; /* Ajuste esse valor conforme necessário */
     height: auto;
     margin-bottom: 1rem;
     border-radius: 1rem; /* Se quiser deixar arredondado */
@@ -208,7 +207,7 @@ h2 {
 }
 
 .experi-box .imgFX{
-    width: 160px; /* Ajuste esse valor conforme necessário */
+    width: 80px; /* Ajuste esse valor conforme necessário */
     height: auto;
     margin-bottom: 1rem;
     border-radius: 1rem; /* Se quiser deixar arredondado */
@@ -229,28 +228,140 @@ h2 {
 
 /* Configurando a seção de Parceiros */ 
 .parteners {
+    background-color: #2B2B42;
+    color: #ffffff;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.parteners h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.parteners-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 3rem;
     flex-wrap: wrap;
-    gap: 4rem;
-    background-color: #2B2B42;
-    color: #ffffff;
 }
 
-.parteneres-img-item a img {
-    width: 200px;
-    height: auto;
-    margin-bottom: 1rem;
-    border-radius: 1rem; 
-    object-fit: contain; 
+.parteners-img-item {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.parteners-img-item:hover {
+    transform: scale(1.05);
+}
+
+/* Nome do parceiro no hover */
+.parteners-img-item::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffffcc;
+    color: #2B2B42;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.parteners-img-item:hover::after {
+    opacity: 1;
+}
+
+.parteners-img-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 0.5rem;
 }
 
 /* Configurando a seção de Projetos */
 .projects {
     background-color: #1e2a38;
     color: #ffffff;
+    padding-bottom: 5rem;
 }
+
+.proje h2 {
+    margin-bottom: 4rem;
+    align-items: center;
+}
+
+.projects .proje-container a {
+    color: inherit;             /* Herdar a cor do texto normalmente */
+    text-decoration: none;      /* Remove o sublinhado */
+    display: block;             /* Garante que o link ocupa toda a área */
+    width: 100%;
+    max-width: 180px;
+    height: 100%;
+}
+
+.proje-container a {
+    display: flex;
+    justify-content: center;
+    text-align: inherit;
+}
+
+.proje-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem 2rem;
+    justify-items: center;
+}
+
+
+.proje-box {
+    background-color: rgba(26, 94, 243, 0.08);
+    padding: 5rem 3rem;
+    border-radius: 1rem;
+    text-align: center;
+    width: 100%;
+    max-width: 180px;
+    height: 220px; /* <-- Altura fixa */
+    box-shadow: 0 4px 10px rgba(18, 187, 238, 0.192);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;                 /* Alinhamento interno */
+    flex-direction: column;
+    justify-content: center;      /* Centraliza o conteúdo verticalmente */
+}
+
+.proje-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(22, 193, 236, 0.671);
+}
+
+.proje-box h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.proje-box p {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
 
 
 /* Configurando a seção de Habilidades */
@@ -392,6 +503,11 @@ h2 {
         right: -20px;
         font-size: 14px;
     }
+
+    /* Configuração da seção de Projetos */
+    .proje-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (min-width: 400px) {
@@ -418,6 +534,13 @@ h2 {
     .home-img .img-box {
         width: 40vw;
         height: 40vw;
+    }
+
+    /* Configurando a HiddenPage */
+    .hiddenPage a {
+        position: absolute;
+        right: -10px;
+        font-size: 14px;
     }
 }
 

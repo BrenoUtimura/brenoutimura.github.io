@@ -1,4 +1,4 @@
-# Primeiros prazos do projeto no momento
+# TO-DO
 
 
 - ✅ Criar repositório;
@@ -14,3 +14,5 @@
 - ✅ Terminar a implementação da responsividade na página, onde terá de corrigir a lista de intens no menu que não está sumindo quando eu reduzo a tela para o minímo;
 - [ ] Finalizar a estrutura e responsividade da página principal;
 - [ ] Implementar responsividade na gamePage;
+- [ ] Ajustar a game page pois não está funcionando mais os estilos dos cards, por isso implementar utilizando o tilt.js;
+- [ ] Arrumar o game do Tetris pois não está chamando a tela do game over de quando atinje um limite de peças em tela;
