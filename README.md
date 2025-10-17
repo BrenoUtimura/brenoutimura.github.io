@@ -12,7 +12,7 @@
 - ✅ Corrigir a cor dos menus de seleção na página do portifólio;
 - ✅ Corrigir o neon dos cards para que acompanhe a movimentação da animação do card;
 - ✅ Terminar a implementação da responsividade na página, onde terá de corrigir a lista de intens no menu que não está sumindo quando eu reduzo a tela para o minímo;
-- [ ] Finalizar a estrutura e responsividade da página principal;
+- ✅ Finalizar a estrutura e responsividade da página principal;
 - [ ] Implementar responsividade na gamePage;
 - [ ] Ajustar a game page pois não está funcionando mais os estilos dos cards, por isso implementar utilizando o tilt.js;
 - [ ] Arrumar o game do Tetris pois não está chamando a tela do game over de quando atinje um limite de peças em tela;

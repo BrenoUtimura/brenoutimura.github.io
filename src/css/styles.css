@@ -306,6 +306,7 @@ h2 {
     background-color: #1e2a38;
     color: #ffffff;
     padding-top: 5rem;
+    align-items: center;
 }
 
 .proje h2 {
@@ -415,173 +416,377 @@ h2 {
 .contacts {
     background-color: #251d40;
     color: #ffffff;
+    padding-bottom: 4rem;
+}
+
+.contacts h2 {
+    margin-bottom: 5rem;
+    padding-top: 3rem;
+}
+
+.contacts form {
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contacts form .input-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contacts form .input-box input,
+.contacts form textarea {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: var(--second-bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+}
+
+.contacts form textarea {
+    resize: none;
+}
+
+/* From Uiverse.io by cssbuttons-io */ 
+.c-button {
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 0.9em 1.6em;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  z-index: 1;
+}
+
+.c-button--gooey {
+  color: #4A2F4D;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 4px solid #4A2F4D;
+  border-radius: 0;
+  position: relative;
+  transition: all 700ms ease;
+}
+
+.c-button--gooey .c-button__blobs {
+  height: 100%;
+  filter: url(#goo);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: -3px;
+  right: -1px;
+  z-index: -1;
+}
+
+.c-button--gooey .c-button__blobs div {
+  background-color: #4A2F4D;
+  width: 34%;
+  height: 100%;
+  border-radius: 100%;
+  position: absolute;
+  transform: scale(1.4) translateY(125%) translateZ(0);
+  transition: all 700ms ease;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(1) {
+  left: -5%;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(2) {
+  left: 30%;
+  transition-delay: 60ms;
+}
+
+.c-button--gooey .c-button__blobs div:nth-child(3) {
+  left: 66%;
+  transition-delay: 25ms;
+}
+
+.c-button--gooey:hover {
+  color: #fff;
+}
+
+.c-button--gooey:hover .c-button__blobs div {
+  transform: scale(1.4) translateY(0) translateZ(0);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 9%;
+    background: #311731;
+}
+
+.footer-text p {
+    font-size: 1.6rem;
+    color: #ffffff;
 }
 
 
 /* Configurando o media screen da página */
-@media (max-width: 700px){
+@media (max-width: 700px) {
 
-    /* Configuração da navbar */
-    .navbar{
-        flex-direction: column;
-        padding: 15px 5%;
-        align-items: flex-start;
-    }
+  /* NAVBAR */
+  .navbar {
+    flex-direction: column;
+    padding: 15px 5%;
+    align-items: flex-start;
+  }
 
-    .navbar ul {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 15px;
-    }
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+  }
 
-    .navbar ul li {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
+  .navbar ul li {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
 
-    /* configuração da logo */
-    .logo img {
-        max-width: 200px;
-    }
+  .logo img {
+    max-width: 200px;
+  }
 
-    /* Configuração do menu burguer */
-    .menu-burger {
-        display: block;
-        z-index: 1;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
+  .menu-burger {
+    display: block;
+    z-index: 1;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 
-    /* Configurando a Lista da Navbar */
-    .nav-list {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #251d40;
-        clip-path: circle(0px at 100% 0%);
-        transition: clip-path 1s  ease-in-out;
+  .nav-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #251d40;
+    clip-path: circle(0px at 100% 0%);
+    transition: clip-path 1s ease-in-out;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+  }
 
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        gap: 0;
-        pointer-events: none;
-    }
+  .nav-list a {
+    font-size: 24px;
+    opacity: 0;
+  }
 
-    .nav-list a {
-        font-size: 24px;
-        opacity: 0;
-    }
+  .nav-list li:nth-child(1) a,
+  .nav-list li:nth-child(2) a,
+  .nav-list li:nth-child(3) a {
+    transition: 0.5s;
+  }
 
-    .nav-list li:nth-child(1) a {
-        transition: 0.5s;
-    }
+  .nav-list.active {
+    clip-path: circle(1500px at 90% 15%);
+    pointer-events: all;
+  }
 
-    .nav-list li:nth-child(2) a {
-        transition: 0.5s;
-    }
+  .nav-list.active a {
+    opacity: 1;
+  }
 
-    .nav-list li:nth-child(3) a {
-        transition: 0.5s;
-    }
+  .nav-list.active .menu-burger {
+    position: fixed;
+    top: 26px;
+    right: 16px;
+    border-top-color: transparent;
+  }
 
-    /* Estilos ativos da navList */
-    .nav-list.active {
-        clip-path: circle(1500px at 90% 15%);
-        pointer-events: all;
-    }
+  .nav-list.active .menu-burger::before {
+    transform: rotate(135deg);
+  }
 
-    .nav-list.active a {
-        opacity: 1;
-    }
+  .nav-list.active .menu-burger::after {
+    transform: rotate(-135deg);
+    top: -7px;
+  }
 
-    .nav-list.active .menu-burger {
-        position: fixed;
-        top: 26px;
-        right: 16px;
-        border-top-color: transparent;
-    }
+  /* ABOUT */
+  .about {
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 5% 40px;
+    text-align: center;
+  }
 
-    .nav-list.active .menu-burger::before {
-        transform: rotate(135deg);
-    }
+  .about-me {
+    font-size: 18px;
+  }
 
-    .nav-list.active .menu-burger::after {
-        transform: rotate(-135deg);
-        top: -7px;
-    }
+  .about-me .sci a {
+    font-size: 50px;
+    padding: 20px;
+  }
 
-    /* configuração de sobre mim */
-    .about {
-        flex-direction: column;
-        align-items: center;
-        padding: 120px 5% 40px;
-        text-align: center;
-    }
+  .home-img .img-box {
+    width: 60vw;
+    height: 60vw;
+  }
 
-    .about-me {
-        font-size: 18px;
-    }
+  /* HIDDEN PAGE */
+  .hiddenPage a {
+    right: -20px;
+    font-size: 14px;
+  }
 
-    .about-me .sci a {
-        font-size: 80px;
-        padding: 40px;
-    }
+  /* EXPERIÊNCIAS */
+  .experi h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 
-    /* Manipulando a imagem principal da homepage */
-    .home-img .img-box {
-        width: 50vw;
-        height: 50vw;
-    }
+  .experi-container {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
 
-    /* Manipulação da mini imagem da hidden page */
-    .hiddenPage a {
-        position: absolute;
-        right: -20px;
-        font-size: 14px;
-    }
+  .experi-box {
+    width: 100%;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
-    /* Configuração da seção de Projetos */
-    .proje-container {
-        grid-template-columns: 1fr;
-    }
+  .experi-box h3 {
+    font-size: 1.6rem;
+  }
+
+  .experi-box p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }
+
+  /* PARCEIROS */
+  .parteners-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .parteners-img-item {
+    width: 140px;
+    height: 140px;
+  }
+
+  .parteners-img-item::after {
+    font-size: 0.75rem;
+    bottom: -25px;
+  }
+
+  /* PROJETOS */
+  .proje-container {
+    grid-template-columns: 1fr;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .proje-box {
+    max-width: 100%;
+    padding: 2rem 1rem;
+    width: 100%;
+    height: auto;
+  }
+
+  /* HABILIDADES */
+  .hability-container {
+    grid-template-columns: 1fr;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .hability-box {
+    max-width: 100%;
+    padding: 2rem 1rem;
+    width: 100%;
+    height: auto;
+  }
+
+  /* CONTATO */
+  .contacts form .input-box {
+    flex-direction: column;
+  }
+
+  .contacts form .input-box input {
+    width: 100%;
+  }
+
+  .c-button {
+    font-size: 14px;
+    padding: 0.7em 1.2em;
+  }
+
+  .contacts form {
+    padding: 0 1rem;
+  }
 }
+
 
 @media (min-width: 400px) {
 
-    /* Configuração da navbar */
-    .navbar {
-        padding: 20px 5%;
-    }
+  .navbar {
+    padding: 20px 5%;
+  }
 
-    .navbar ul li a {
-        font-size: 16px;
-    }
+  .navbar ul li a {
+    font-size: 16px;
+  }
 
-    .about-me {
-        font-size: 16px;
-    }
+  .about-me {
+    font-size: 16px;
+  }
 
-    /* Configuração sobre mim */
-    .about-me .sci a {
-        font-size: 35px;
-        padding: 20px;
-    }
+  .about-me .sci a {
+    font-size: 35px;
+    padding: 20px;
+  }
 
-    .home-img .img-box {
-        width: 40vw;
-        height: 40vw;
-    }
+  .home-img .img-box {
+    width: 40vw;
+    height: 40vw;
+  }
 
-    /* Configurando a HiddenPage */
-    .hiddenPage a {
-        position: absolute;
-        right: -10px;
-        font-size: 14px;
-    }
+  .hiddenPage a {
+    right: -10px;
+    font-size: 14px;
+  }
+
+  .experi h2 {
+    font-size: 2.2rem;
+  }
+
+  .experi-container {
+    gap: 1.5rem;
+  }
+
+  .experi-box {
+    padding: 1.8rem;
+  }
+
+  .experi-box h3 {
+    font-size: 1.8rem;
+  }
+
+  .experi-box p {
+    font-size: 1.3rem;
+  }
 }
+
 
 
